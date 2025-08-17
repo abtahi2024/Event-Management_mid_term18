@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Login</title>
+    <style>
+      p label{
+        font-size:1.25rem
+      }
+    </style>
+  </head>
+  <body class="bg-white min-h-screen flex items-center justify-center">
+    <div class="max-w-full mx-auto relative overflow-hidden z-10 bg-rose-200 p-16 rounded-lg shadow-lg before:w-24 before:h-28 before:absolute before:bg-fuchsia-500 before:rounded-full before:-z-10 before:blur-2xl after:w-32 after:h-32 after:absolute after:bg-sky-500 after:rounded-full after:-z-10 after:blur-xl after:top-24 after:-right-12">
+      <h1 class="text-3xl font-bold text-center  text-sky-900 mb-6">Login to Event</h1>
+
+      {% if messages %}
+        {% for message in messages %}
+          <div class="bg-green-100 text-green-800 px-4 py-2 rounded border border-green-300 mb-4 text-sm">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+
+      <form method="POST" class="space-y-4">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button
+          type="submit"
+          class="w-full [background:linear-gradient(144deg,#af40ff,#5b42f3_50%,#00ddeb)] text-white px-4 py-2 font-bold rounded-md hover:opacity-80"
+        >
+          Sign In
+        </button>
+        <a href="{% url 'password-reset' %}" class="text-black hover:text-blue-800 text-lg">Forgot Password ?</a>
+      </form>
+
+      <p class="text-sm text-center text-gray-600 mt-4">
+        Don't have an account?
+        <a href="{% url 'sign-up' %}" class="text-blue-600 hover:underline font-medium">Register here</a>
+      </p>
+    </div>
+  </body>
+</html>

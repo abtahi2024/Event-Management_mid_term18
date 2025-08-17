@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Event Details{% endblock %}
+
+{% block content %}
+<h2 class="text-4xl font-bold mb-6 text-center bg-gradient-to-r from-sky-600 to-purple-500 bg-clip-text text-transparent">Event Details</h2>
+
+<div class="bg-gradient-to-bl from-purple-500 via-[#f85385] to-rose-500 rounded-xl shadow-lg p-6 md:p-10 grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+  
+  <!-- Event Image -->
+  <div>
+     <img src="{{event.image.url}}" alt="hellkj">
+
+  <!-- Event Information -->
+  <div>
+    <h2 class="text-2xl font-bold mb-4 text-white">{{ event.name }}</h2>
+    
+    <p class="mb-2 text-lg"><span class="font-semibold text-white">📅 Date:</span> {{ event.date }}</p>
+    <p class="mb-2 text-lg"><span class="font-semibold text-white">⏰ Time:</span> {{ event.time }}</p>
+    <p class="mb-2 text-lg"><span class="font-semibold text-white">📍 Location:</span> {{ event.location }}</p>
+    <p class="mb-2 text-lg"><span class="font-semibold text-white">🏷️ Category:</span> {{ event.category.name }}</p>
+     {% comment %} <p class="mt-4 text-gray-700">{{ event.description }}</p> {% endcomment %}
+
+    <!-- RSVP Button -->
+    <form method="POST" action="{% url 'rsvp-event' event.id %}" class="mt-6">
+      {% csrf_token %}
+      <button type="submit" class="text-white bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300  shadow-lg shadow-blue-400/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+        RSVP
+      </button>
+    </form>
+
+    <!-- Participant List -->
+    <div class="mt-8">
+      <h4 class="text-xl font-semibold mb-2">👥 Participants:</h4>
+      <ul class="list-disc list-inside text-gray-700">
+        {% for participant in event.participant.all %}
+          <li class='text-lg text-white'>{{ participant.username }} ({{ participant.email }})</li>
+        {% empty %}
+          <li>No participants registered yet.</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}
